@@ -1,0 +1,18 @@
+.Dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right,#9d50bb,#6e48aa);
+    min-height: 100vh;
+    padding: 150px 0;
+}
+
+.Dashboard__container {
+    width:80%;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: #dedede;
+    box-shadow: 0 15px 30px rgba(0,0,0, 0.5);
+    border-radius: 3px;
+    padding: 20px 50px;
+}

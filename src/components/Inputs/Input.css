@@ -1,0 +1,60 @@
+.Input {
+    padding: 20px;
+    height: 200px;
+    width: 350px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    margin: 15px 0;
+}
+
+.SubInput {
+    padding: 20px;
+    height: 260px;
+    width: 350px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    margin: 15px 0;
+}
+
+.Form__group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.Form__label {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.Form__paren-value {
+    width: 30%;
+}
+
+.Form__input {
+    display: block;
+    width:70%;
+    float:right;
+}
+
+.Form__controls {
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Form__button {
+    background: #cccccc;
+    width: 120px;
+    padding: 5px 10px;
+    border: 1px solid rgba(0,0,0, 0.7);
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.Form__button:hover {
+    background-color: rgba(0,0,0, 0.7);
+    color: #eeeeee;
+}
+
+.Form__button:not(:last-child) {
+    margin-right: 20px;
+}
