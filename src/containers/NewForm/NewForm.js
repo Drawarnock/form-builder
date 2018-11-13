@@ -29,11 +29,19 @@ class NewForm extends Component {
         } else {
             parentId = inputID;
         };
+        const parentObj = this.state.form.inputs.find( input => input.id === parentId) || this.state.form.inputs[inpIndex].subinputs.find( subinput => subinput.id === parentId);
+        // const parentObj = this.state.form.inputs[inpIndex].subinputs.find( subinput => subinput.id === parentId);
 
         if(this.state.form.inputs[inpIndex].subinputs) {
-            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text', parentType: 'text'})
+            // parentId = subinputId;
+          
+            console.log(parentObj);
+            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text', parentType: parentObj.type || 'text' })
         } else {
-            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text',  parentType: 'text'}]
+            // parentId = inputID;
+          
+            console.log(parentObj);
+            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text',  parentType: parentObj.type || 'text'}]
         }
         newInput.subinputs = subinputs
         inputs.splice(inpIndex, 1, newInput)
@@ -116,15 +124,15 @@ class NewForm extends Component {
 
            
             subinputs = subinputs.map(subinput => {
-                if(subinput.parentId === creatorInputId) {
-
-                    let parentIndex = inputs[index].id === creatorInputId ? index : -1;
-                    subinput.parentType = inputs[index].type
-                    if(parentIndex === -1) {
-                        const parent = subinputs.find( input => input.id === creatorInputId);
-                        console.log(parent);
-                        subinput.parentType = parent.type;
-                    }  
+                if(subinput.parentId === subinputId) {
+                    console.log(subinput);
+                    // let parentIndex = inputs[index].id === creatorInputId ? index : -1;
+                    // // subinput.parentType = inputs[index].type
+                    // if(parentIndex === -1) {
+                    //     const parent = subinputs.find( input => input.id === creatorInputId);
+                    //     console.log(parent);
+                        subinput.parentType = e.target.value;
+                    // }  
                 }
                 return subinput;
             });
