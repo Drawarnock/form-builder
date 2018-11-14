@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import './NewForm.css';
 import Input from '../../components/Inputs/Input';
 import GenerateInput from '../../components/Inputs/GenerateInput';
+import { db } from '../../indexedDB';
 
 class NewForm extends Component {
 
+    componentDidMount() {
+    }
+
     state = {
         form: {
+            formId: Math.round(Math.random()*100000000),
+            title: 'title',
+            description:'description',
             inputs: []
         }
     };
 
     generateInputHandler = () => {
         this.setState({ form: {
+                ...this.state.form,
                 inputs:  this.state.form.inputs.concat({id: Math.round(Math.random()*100000000), question: '', type: 'text'})
             } 
         });
@@ -30,23 +38,19 @@ class NewForm extends Component {
             parentId = inputID;
         };
         const parentObj = this.state.form.inputs.find( input => input.id === parentId) || this.state.form.inputs[inpIndex].subinputs.find( subinput => subinput.id === parentId);
-        // const parentObj = this.state.form.inputs[inpIndex].subinputs.find( subinput => subinput.id === parentId);
 
         if(this.state.form.inputs[inpIndex].subinputs) {
-            // parentId = subinputId;
-          
-            console.log(parentObj);
-            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text', parentType: parentObj.type || 'text' })
+
+            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text', parentType: parentObj.type || 'text' });
         } else {
-            // parentId = inputID;
-          
-            console.log(parentObj);
+
             subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text',  parentType: parentObj.type || 'text'}]
         }
         newInput.subinputs = subinputs
         inputs.splice(inpIndex, 1, newInput)
         this.setState({
             form: {
+                ...this.state.form,
                 inputs: inputs
             }
         });
@@ -125,14 +129,7 @@ class NewForm extends Component {
            
             subinputs = subinputs.map(subinput => {
                 if(subinput.parentId === subinputId) {
-                    console.log(subinput);
-                    // let parentIndex = inputs[index].id === creatorInputId ? index : -1;
-                    // // subinput.parentType = inputs[index].type
-                    // if(parentIndex === -1) {
-                    //     const parent = subinputs.find( input => input.id === creatorInputId);
-                    //     console.log(parent);
-                        subinput.parentType = e.target.value;
-                    // }  
+                    subinput.parentType = e.target.value;
                 }
                 return subinput;
             });
@@ -155,7 +152,16 @@ class NewForm extends Component {
 
     onSaveFormHandler = e => {
         e.preventDefault();
-        // console.log(this.state.form);
+        const form = this.state.form;
+          db.forms.put(form).then (function(){
+              return db.forms.get({formId: form.formId});
+          }).then(function (form) {
+
+              console.log(form)
+          }).catch(function(error) {
+
+             console.log(error);
+          });
     }
 
     render () {
@@ -178,6 +184,10 @@ class NewForm extends Component {
         return(
             <div className="NewForm">
                 <form onSubmit={this.onSaveFormHandler}>
+                    <label htmlFor="title" >Title: </label>
+                    <input type="text" id="title" />
+                    <label htmlFor="description" >Description: </label>
+                    <textarea type="text" id="description" ></textarea>
                     {inputs}
                     <GenerateInput generateInput={this.generateInputHandler} />
                     <input type="submit" value="SAVE FORM" />
