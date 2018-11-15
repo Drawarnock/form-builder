@@ -5,13 +5,27 @@ import { db } from  '../../indexedDB';
 class Dashboard extends Component {
 
     componentDidMount() {
-        db.forms.each( form => {
-            this.setState({forms: this.state.forms.concat(form)});
-        });
+        this.fetchForms();
     }
 
     state = {
         forms: []
+    }
+
+    deleteFormHandler = async (id) => {
+        await db.forms.where({formId: id}).delete();
+        const forms = [...this.state.forms];
+        const delIndex = forms.findIndex( form => form.id === id);
+        forms.splice(delIndex,1)
+        await this.setState({
+            forms: forms
+        });
+    }
+
+    fetchForms = async () => {
+        await db.forms.each( async form => {
+            await this.setState({forms: this.state.forms.concat(form)});
+        });
     }
 
     render() {
@@ -20,16 +34,16 @@ class Dashboard extends Component {
         <FormThumbnail  key={form.formId} created={true}
                         title = {form.title}
                         description={form.description}
-                        formId={form.formId}/>)
+                        formId={form.formId}
+                        onDeleteForm ={this.deleteFormHandler}/>)
 
 
         return(
             <div className="Dashboard">
-                <h2 style={{ fontSize: '36px', marginBottom: '80px', textTransform: "uppercase" }}>Your Forms:</h2>
+                <h2 style={{ fontSize: '36px', marginBottom: '80px', textTransform: "uppercase", color: "#dedede" }}>Your Forms:</h2>
                 <div className="Dashboard__container">
-               
-                    <FormThumbnail created={false} />
                     {forms}
+                    <FormThumbnail created={false} />
                 </div>
             </div>
         )

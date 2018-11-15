@@ -12,8 +12,8 @@ class NewForm extends Component {
     state = {
         form: {
             formId: Math.round(Math.random()*100000000),
-            title: 'title',
-            description:'description',
+            title: '',
+            description:'',
             inputs: []
         }
     };
@@ -24,6 +24,28 @@ class NewForm extends Component {
                 inputs:  this.state.form.inputs.concat({id: Math.round(Math.random()*100000000), question: '', type: 'text'})
             } 
         });
+    }
+
+    titleChangedHandler = e => {
+        this.setState({
+            form : {
+                ...this.state.form,
+                title: e.target.value
+            }
+        });
+    }
+
+    descriptionChangedHandler = e => {
+        this.setState({
+            form : {
+                ...this.state.form,
+                description: e.target.value
+            }
+        });
+    }
+
+    setConditionHandler = (e) => {
+        console.log(e.target.value);
     }
 
     generateSubInputHandler = (inputID, subinputId) => {
@@ -41,10 +63,10 @@ class NewForm extends Component {
 
         if(this.state.form.inputs[inpIndex].subinputs) {
 
-            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text', parentType: parentObj.type || 'text' });
+            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: '' , parenQuestionAnswer: '', type: 'text', parentType: parentObj.type || 'text' });
         } else {
 
-            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', condition: '', type: 'text',  parentType: parentObj.type || 'text'}]
+            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: '' , parenQuestionAnswer: '', type: 'text',  parentType: parentObj.type || 'text'}]
         }
         newInput.subinputs = subinputs
         inputs.splice(inpIndex, 1, newInput)
@@ -150,18 +172,11 @@ class NewForm extends Component {
         });
     }
 
-    onSaveFormHandler = e => {
+    onSaveFormHandler = async e => {
         e.preventDefault();
         const form = this.state.form;
-          db.forms.put(form).then (function(){
-              return db.forms.get({formId: form.formId});
-          }).then(function (form) {
-
-              console.log(form)
-          }).catch(function(error) {
-
-             console.log(error);
-          });
+        await db.forms.put(form);
+        this.props.history.replace('/dashboard');
     }
 
     render () {
@@ -178,19 +193,24 @@ class NewForm extends Component {
                    inputRefId={input.id}
                    subinputChanged = {this.onSubInputChangedHandler}
                    inputIndex = {index}
+                   subinputCondition = {this.setConditionHandler}
                    />
         );
 
         return(
             <div className="NewForm">
                 <form onSubmit={this.onSaveFormHandler}>
-                    <label htmlFor="title" >Title: </label>
-                    <input type="text" id="title" />
-                    <label htmlFor="description" >Description: </label>
-                    <textarea type="text" id="description" ></textarea>
+                    <div className="NewForm__group">
+                        <label className="NewForm__label" htmlFor="title" >Title: </label>
+                        <input className= "NewForm__title" type="text" id="title" onChange = {this.titleChangedHandler} value={this.state.form.title} />
+                    </div>
+                    <div className="NewForm__group">
+                        <label className="NewForm__label" htmlFor="description" >Description: </label>
+                        <textarea className="NewForm__desc" type="text" id="description" onChange = {this.descriptionChangedHandler} value={this.state.form.description} ></textarea>
+                    </div>
                     {inputs}
                     <GenerateInput generateInput={this.generateInputHandler} />
-                    <input type="submit" value="SAVE FORM" />
+                    <input className="NewForm__submit" type="submit" value="SAVE FORM" />
                 </form>
             </div>
         );

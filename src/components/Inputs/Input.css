@@ -1,22 +1,22 @@
 .Input {
     padding: 20px;
-    height: 200px;
-    width: 350px;
+    height: 220px;
+    width: 380px;
     box-shadow: 0 10px 20px rgba(0,0,0,.25);
     margin: 15px 0;
 }
 
 .SubInput {
     padding: 20px;
-    height: 260px;
-    width: 350px;
+    height: 280px;
+    width: 380px;
     box-shadow: 0 10px 20px rgba(0,0,0,.25);
     margin: 15px 0;
 }
 
 .Form__group {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .Form__label {

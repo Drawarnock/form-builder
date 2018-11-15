@@ -22,20 +22,20 @@ class SubInput extends Component {
         if (this.props.parentType === 'radio') {
 
             answer = 
-                (<select>
+                (<select className="Form__input" id="answer" onChange={this.props.onSetCondition}>
                         <option value="yes">YES</option>
                         <option value="no">NO</option>
                 </select>)
         } else if (this.props.parentType === 'number') {
-            answer = <input type="number" />
+            answer = <input className="Form__input" id="answer" type="number" onChange={this.props.onSetCondition} />
         } else {
-            answer = <input type="text" />
+            answer = <input className="Form__input" id="answer" type="text" onChange={this.props.onSetCondition} />
         }
         return(
             <div className="SubInput">
                 <div className="Form__group">
-                    <label className="Form__label" htmlFor="condition">Condition</label>
-                    <select onChange={this.props.onSubinputChange} className="Form__input" id="condition">
+                    <label className="Form__label" htmlFor="equals">Condition</label>
+                    <select onChange={this.props.onSetCondition} className="Form__input" id="equals">
                         {conditionOpt}
                     </select>
                     <div className="Form__parent-value">{answer}</div>

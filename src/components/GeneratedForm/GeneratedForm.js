@@ -3,7 +3,6 @@ import { db } from '../../indexedDB';
 
 class GeneratedForm extends Component {
 
-    
     state = {
         form: {
             formId: null,
@@ -25,7 +24,6 @@ class GeneratedForm extends Component {
         });
     }
 
-
     render() {
 
         let inputs = null;
@@ -34,19 +32,22 @@ class GeneratedForm extends Component {
 
                 inputs = this.state.form.inputs.map( input => {
 
-                    const subinputs = input.subinputs.length > 0 ? input.subinputs.map( subinput => {
-                        return(
-                         <ul key={subinput.id}>
-                             <li>subinput condition: {subinput.condition}</li>
-                             <li>subinputId: {subinput.id}</li>
-                             <li>subinput parentId: {subinput.parentId}</li>
-                             <li>subinput parent type: {subinput.parentType}</li>
-                             <li>question: {subinput.question}</li>
-                             <li>type: {subinput.type}</li>
-                         </ul>
-                        )
-                    }) : "no subinputs"
-
+                    let subinputs = "no subinputs";
+                    if(input.subinputs) {
+                        subinputs = input.subinputs.map( subinput => {
+                            return(
+                             <ul key={subinput.id}>
+                                 <li>subinput condition: {subinput.parentQuestionCondition} = {subinput.parentQuestionAnswer}</li>
+                                 <li>subinputId: {subinput.id}</li>
+                                 <li>subinput parentId: {subinput.parentId}</li>
+                                 <li>subinput parent type: {subinput.parentType}</li>
+                                 <li>question: {subinput.question}</li>
+                                 <li>type: {subinput.type}</li>
+                             </ul>
+                            )
+                        });
+                    }
+                    
                     return( 
                     <ul key={input.id}>
                         <li>inputId: {input.id}</li>
