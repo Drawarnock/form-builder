@@ -16,7 +16,6 @@ class GeneratedForm extends Component {
 
         const paramID = this.props.match.params.id;
         db.forms.get({formId: parseInt(paramID)}).then((form) =>{
-
             this.setState({form: form})
 
         }).catch(err => {

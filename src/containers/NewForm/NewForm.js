@@ -44,10 +44,6 @@ class NewForm extends Component {
         });
     }
 
-    setConditionHandler = (e) => {
-        console.log(e.target.value);
-    }
-
     generateSubInputHandler = (inputID, subinputId) => {
         let parentId,subinputs; 
         const inpIndex = this.state.form.inputs.findIndex( input => input.id === inputID);
@@ -61,12 +57,19 @@ class NewForm extends Component {
         };
         const parentObj = this.state.form.inputs.find( input => input.id === parentId) || this.state.form.inputs[inpIndex].subinputs.find( subinput => subinput.id === parentId);
 
-        if(this.state.form.inputs[inpIndex].subinputs) {
+        let parenQuestionAnswer;
+        if(parentObj.type ==="radio") {
+            parenQuestionAnswer = "Yes"
+        } else {
+            parenQuestionAnswer = ""
+        }
 
-            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: '' , parenQuestionAnswer: '', type: 'text', parentType: parentObj.type || 'text' });
+        if(this.state.form.inputs[inpIndex].subinputs) {
+    
+            subinputs = [...this.state.form.inputs[inpIndex].subinputs].concat({id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: 'equals' , parenQuestionAnswer: parenQuestionAnswer, type: 'text', parentType: parentObj.type || 'text' });
         } else {
 
-            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: '' , parenQuestionAnswer: '', type: 'text',  parentType: parentObj.type || 'text'}]
+            subinputs = [{id: Math.round(Math.random()*100000000), parentId: parentId, question: '', parentQuestionCondition: 'equals' , parentQuestionAnswer: parenQuestionAnswer, type: 'text',  parentType: parentObj.type || 'text'}]
         }
         newInput.subinputs = subinputs
         inputs.splice(inpIndex, 1, newInput)
@@ -78,12 +81,13 @@ class NewForm extends Component {
         });
     }
 
-    deleteInputHandler = (id) => {
+    deleteInputHandler = async (id) => {
         const inputs = [...this.state.form.inputs];
         const delIndex = inputs.findIndex(input => input.id === id);
         inputs.splice(delIndex, 1);
-        this.setState({
+        await this.setState({
             form: {
+                ...this.state.form,
                 inputs: inputs
             }
         });
@@ -98,12 +102,13 @@ class NewForm extends Component {
         inputs[inputsIndex].subinputs = subinputs;
         this.setState({
             form: {
+                ...this.state.form,
                 inputs: inputs
             }
         });
     }
 
-    onInputChangeHandler = (e, id) => {
+    onInputChangeHandler = async (e, id) => {
         const inputs = [...this.state.form.inputs];
         const updateIndex = inputs.findIndex(input => input.id === id);
 
@@ -124,7 +129,7 @@ class NewForm extends Component {
             ...inputs[updateIndex],
             [e.target.id]: e.target.value
         }
-        this.setState({
+        await this.setState({
             form: {
                 ...this.state.form,
                 inputs: inputs
@@ -180,7 +185,6 @@ class NewForm extends Component {
     }
 
     render () {
-        console.log();
         let inputs = this.state.form.inputs.map( (input, index) => 
             <Input key={input.id} 
                    type={input.type} 

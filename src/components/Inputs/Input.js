@@ -4,10 +4,6 @@ import SubInput from './SubInput';
 
 class Input extends Component {
 
-    componentnWillMount() {
-        
-    }
-
     render() {
         
         let subinputs
@@ -22,7 +18,7 @@ class Input extends Component {
                     parentRefId ={subinput.parentId}
                     onChange = {this.props.onChange}
                     onSubinputChange = {(e) => this.props.subinputChanged(e, subinput.parentId, subinput.id, this.props.inputIndex)} 
-                    onSetCondition={this.props.subinputCondition}/>)
+                    onSetCondition={this.props.subinputCondition} />)
         }
 
         return(

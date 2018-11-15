@@ -10,7 +10,7 @@ class SubInput extends Component {
         if(this.props.parentType === 'text' || this.props.parentType === 'radio') { 
             conditionOpt = <option value="Equals">Equals</option>
         } else {
-            // number
+
             conditionOpt = (
             <>
                 <option value="Equals">Equals</option>
@@ -22,20 +22,20 @@ class SubInput extends Component {
         if (this.props.parentType === 'radio') {
 
             answer = 
-                (<select className="Form__input" id="answer" onChange={this.props.onSetCondition}>
-                        <option value="yes">YES</option>
-                        <option value="no">NO</option>
+                (<select className="Form__input" id="parentQuestionAnswer" onChange={this.props.onSubinputChange}>
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
                 </select>)
         } else if (this.props.parentType === 'number') {
-            answer = <input className="Form__input" id="answer" type="number" onChange={this.props.onSetCondition} />
+            answer = <input className="Form__input" id="parentQuestionAnswer" type="number" onChange={this.props.onSubinputChange} />
         } else {
-            answer = <input className="Form__input" id="answer" type="text" onChange={this.props.onSetCondition} />
+            answer = <input className="Form__input" id="parentQuestionAnswer" type="text" onChange={this.props.onSubinputChange} />
         }
         return(
             <div className="SubInput">
                 <div className="Form__group">
                     <label className="Form__label" htmlFor="equals">Condition</label>
-                    <select onChange={this.props.onSetCondition} className="Form__input" id="equals">
+                    <select onChange={this.props.onSubinputChange} className="Form__input" id="parentQuestionCondition">
                         {conditionOpt}
                     </select>
                     <div className="Form__parent-value">{answer}</div>
