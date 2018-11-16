@@ -14,19 +14,27 @@ class FormThumbnail extends Component {
 
         render() {
             let created = <div className="FormThumbnail__newForm" onClick={this.detailsClickHandler}>Create new form</div>;
-
+            let style;
             if(this.props.created) {
+
+                style = {
+                    padding:'10px 20px',
+                    cursor: 'auto'
+                };
+
                 created = (
                 <>
                     <h3> Title: {this.props.title}</h3>
                     <p>Description: {this.props.description}</p>
-                    <button onClick={this.detailsClickHandler}>See details</button>
-                    <button onClick={() => this.props.onDeleteForm(this.props.formId)}>Delete form</button>
+                    <div className="FormThumbnail__controls">
+                        <button className="FormThumbnail__button" onClick={this.detailsClickHandler}>See details</button>
+                        <button className="FormThumbnail__button" onClick={() => this.props.onDeleteForm(this.props.formId)}>Delete form</button>
+                    </div>
                 </>
                 );
             }
             return(
-                <div className="FormThumbnail" >
+                <div className="FormThumbnail" style={style}>
                 {created}
 
             </div>

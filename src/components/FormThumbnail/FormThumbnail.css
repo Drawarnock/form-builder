@@ -1,7 +1,7 @@
 .FormThumbnail {
     width: 420px;
     height: 250px;
-    padding: 10px 20px;
+
     box-shadow: 0 1rem 2rem rgba(0,0,0, 0.5);
     cursor: pointer;
     display: flex;
@@ -17,15 +17,38 @@
 }
 
 .FormThumbnail__newForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
     background: linear-gradient(to right,#9d50bb,#6e48aa);
     border: none;
-    padding: 20px 40px;
-    font-size: 20px;
+    font-size: 32px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    border-radius: 100px;
     color: #dedede;
     cursor: pointer;
     transition: all .3s ease;
-    align-self: center;
+    height: 100%;
+}
+
+.FormThumbnail__controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.FormThumbnail__button {
+    font-size: 18px;
+    background-color: #9d50bb;
+    border: none;
+    color: #dedede;
+    padding: 10px 25px;
+    transition: all .3s ease;
+    cursor:pointer;
+    box-shadow: 0 5px 10px rgba(0,0,0,.15);
+    text-transform: uppercase
+}
+
+.FormThumbnail__button:hover {
+    background-color: #6e48aa;
 }

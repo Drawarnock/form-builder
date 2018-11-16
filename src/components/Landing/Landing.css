@@ -1,5 +1,6 @@
 .Landing {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: linear-gradient(rgba(0,0,0, 0.5),rgba(0,0,0, 0.5)), url('../../assets/pexels-photo-210585.jpeg');
@@ -8,7 +9,13 @@
     background-position: center center;
 }
 
-.Link:link, .Link:visited{
+.Landing__title {
+    font-size: 48px;
+    color: #dedede;
+    margin-bottom: 100px;
+}
+
+.Landing__cta:link, .Landing__cta:visited{
     font-size: 24px;
     color: #dedede;
     text-decoration: none;
@@ -19,7 +26,7 @@
     border-radius: 3px;
 }
 
-.Link:hover {
+.Landing__cta:hover {
     background-color: #dedede;
     color: #232323;
 }
